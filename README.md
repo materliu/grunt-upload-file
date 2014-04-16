@@ -1,6 +1,6 @@
 # grunt-upload-file
 
-> After we build the project, sometimes we may need to upload some file through form post method !
+> After we build the project, sometimes we may need to upload some files through form post method !
 
 ## Getting Started
 This plugin requires Grunt.
