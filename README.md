@@ -146,6 +146,7 @@ grunt.registerTask('default', [
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2012-04-16   v0.0.2   correct some README spelling error.
 * 2012-04-16   v0.0.1   initial release.
 
 ## About

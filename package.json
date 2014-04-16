@@ -1,7 +1,7 @@
 {
     "name": "grunt-upload-file",
-    "version": "0.0.1",
-    "description": "After we complie the project, somethimes we may need to upload some file through form post method !",
+    "version": "0.0.2",
+    "description": "After we build the project, sometimes we may need to upload some files through form post method !",
     "homepage": "https://materliu.github.com/grunt-upload-file/",
     "repository": "https://github.com/materliu/grunt-upload-file",
     "author": {
