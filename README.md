@@ -1,4 +1,9 @@
-# grunt-upload-file
+# grunt-upload-file [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
+[![NPM version](https://badge.fury.io/js/grunt-uncss.png)](http://badge.fury.io/js/grunt-uncss)
+[![Build Status](https://travis-ci.org/addyosmani/grunt-uncss.png?branch=master)](https://travis-ci.org/addyosmani/grunt-uncss)
+[![Dependency Status](https://david-dm.org/addyosmani/grunt-uncss.png?theme=shields.io)](https://david-dm.org/addyosmani/grunt-uncss)
+[![devDependency Status](https://david-dm.org/addyosmani/grunt-uncss/dev-status.png?theme=shields.io)](https://david-dm.org/addyosmani/grunt-uncss#info=devDependencies)
 
 > After we build the project, sometimes we may need to upload some files through form post method !
 
@@ -141,7 +146,7 @@ grunt.registerTask('default', [
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-* 2012-04-16   v0.0.1   Work in progress, not yet officially released.
+* 2012-04-16   v0.0.1   initial release.
 
 ## About
 grunt-upload-file is an open-source project by [Tencent](http://www.tencent.com/en-us/) which builds on top of [Node.js](https://nodejs.org).
