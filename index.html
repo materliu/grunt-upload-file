@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Grunt-upload-file by materliu</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Grunt-upload-file</h1>
+        <h2>After build our project, we may need upload some file through post method !</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/materliu/grunt-upload-file/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/materliu/grunt-upload-file/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/materliu/grunt-upload-file" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="grunt-upload-file-" class="anchor" href="#grunt-upload-file-"><span class="octicon octicon-link"></span></a>grunt-upload-file <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a>
+</h1>
+
+<p><a href="http://badge.fury.io/js/grunt-uncss"><img src="https://badge.fury.io/js/grunt-uncss.png" alt="NPM version"></a>
+<a href="https://travis-ci.org/addyosmani/grunt-uncss"><img src="https://travis-ci.org/addyosmani/grunt-uncss.png?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/addyosmani/grunt-uncss"><img src="https://david-dm.org/addyosmani/grunt-uncss.png?theme=shields.io" alt="Dependency Status"></a>
+<a href="https://david-dm.org/addyosmani/grunt-uncss#info=devDependencies"><img src="https://david-dm.org/addyosmani/grunt-uncss/dev-status.png?theme=shields.io" alt="devDependency Status"></a></p>
+
+<blockquote>
+<p>After we build the project, sometimes we may need to upload some files through form post method !</p>
+</blockquote>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>This plugin requires Grunt.</p>
+
+<p>If you haven't used <a href="http://gruntjs.com/">Grunt</a> before, be sure to check out the <a href="http://gruntjs.com/getting-started">Getting Started</a> guide, as it explains how to create a <a href="http://gruntjs.com/sample-gruntfile">Gruntfile</a> as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:</p>
+
+<pre lang="shell"><code>npm install grunt-upload-file --save-dev
+</code></pre>
+
+<p>Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-upload-file'</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="the-upload_file-task" class="anchor" href="#the-upload_file-task"><span class="octicon octicon-link"></span></a>The "upload_file" task</h2>
+
+<h3>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+
+<p>In your project's Gruntfile, add a section named <code>upload_file</code> to the data object passed into <code>grunt.initConfig()</code>.</p>
+
+<p><em>Run this task with the <code>grunt upload_file</code> command.</em></p>
+
+<p>This task was designed to be used in conjunction with one background management system. In Tencent.com when we publish our static resources to the cdn or webserver, we need go to the background management system to publish one zip file! What's the zip file for? We develop our app ,for examples wechat/mobile qq, by hybrid model! The 2g, 3g network connection is very slow, so users have to wait before the browser gets the web resources when he first open the related webview in the app. So when our app found the users' network connection is wifi, it does web resources prefetching by downloading the related updated zip containing the webview needed resources! when the users open the webview, if the related zip is there, no static resources network requests will be sent, the app simply offer the prefetched files contained in zip.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">upload_file</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Task-specific options go here.</span>
+    <span class="p">},</span>
+    <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Target-specific file lists and/or options go here.</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<p>grunt-upload-file uses the <a href="https://github.com/mikeal/request">request</a> module under the hood, and apart from a couple specific to grunt-upload-file options, the rest get passed straight to it. Here's a copy of the of the module's option docs. Otherwise, <a href="https://github.com/mikeal/request">go to the repo</a> and have a look at what's it's capable of.</p>
+
+<ul>
+<li>
+<code>uri || url</code> - fully qualified uri or a parsed url object from url.parse(). REQUIRED.</li>
+<li>
+<code>callback</code> - A function that will receive an <code>error</code>, <code>response</code> and <code>body</code>, after a response if finished</li>
+<li>
+<code>qs</code> - object containing querystring values to be appended to the uri</li>
+<li>
+<code>method</code> - http method, defaults to GET</li>
+<li>
+<code>headers</code> - http headers, defaults to {}</li>
+<li>
+<code>body</code> - entity body for PATCH, POST and PUT requests. Must be buffer or string.</li>
+<li>
+<code>sourceField</code> - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js_code".</li>
+<li>
+<code>auth</code> - A hash containing values user || username, password || pass, and sendImmediately (optional). <a href="https://github.com/mikeal/request#http-authentication">See more info here</a>.</li>
+<li>
+<code>json</code> - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.</li>
+<li>
+<code>multipart</code> - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.</li>
+<li>
+<code>followRedirect</code> - follow HTTP 3xx responses as redirects. defaults to true.</li>
+<li>
+<code>followAllRedirects</code> - follow non-GET HTTP 3xx responses as redirects. defaults to false.</li>
+<li>
+<code>maxRedirects</code> - the maximum number of redirects to follow, defaults to 10.</li>
+<li>
+<code>encoding</code> - Encoding to be used on setEncoding of response data. If set to null, the body is returned as a Buffer.</li>
+<li>
+<code>pool</code> - A hash object containing the agents for these requests. If omitted this request will use the global pool which is set to node's default maxSockets.</li>
+<li>
+<code>pool.maxSockets</code> - Integer containing the maximum amount of sockets in the pool.</li>
+<li>
+<code>timeout</code> - Integer containing the number of milliseconds to wait for a request to respond before aborting the request</li>
+<li>
+<code>proxy</code> - An HTTP proxy to be used. Support proxy Auth with Basic Auth the same way it's supported with the url parameter by embedding the auth info in the uri.</li>
+<li>
+<code>oauth</code> - Options for OAuth HMAC-SHA1 signing. <a href="https://github.com/mikeal/request#oauth-signing">See more info here</a>. The <code>oauth-sign</code> module must be installed to use this functionality.</li>
+<li>
+<code>hawk</code> - Options for <a href="https://github.com/hueniverse/hawk">Hawk signing</a>. The credentials key must contain the necessary signing info, <a href="https://github.com/hueniverse/hawk#usage-example">see hawk docs for details</a>. You will need to install the <code>hawk</code> module to use this functionality.</li>
+<li>
+<code>strictSSL</code> - Set to true to require that SSL certificates be valid. Note: to use your own certificate authority, you need to specify an agent that was created with that ca as an option.</li>
+<li>
+<code>jar</code> - If true, remember cookies for future use (or define your custom cookie jar; <a href="https://github.com/mikeal/request#examples">see mikeal/request's examples</a>). To get either of these functions working you'll need to install an optional dependecy <code>npm i tough-cookie</code>.</li>
+<li>
+<code>aws</code> - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services). You will need to install the <code>aws-sign2</code> module to use this functionality.</li>
+<li>
+<code>httpSignature</code> - Options for the <a href="https://github.com/joyent/node-http-signature/blob/master/http_signing.md">HTTP Signature Scheme</a> using <a href="https://github.com/joyent/node-http-signature">Joyent's library</a>. The <code>http-signature</code> module must be installed and the keyId and key properties must be specified.</li>
+<li>
+<code>localAddress</code> - Local interface to bind for network connections.</li>
+<li>
+<code>ignoreErrors</code> - Ignore the status code returned (if any).</li>
+</ul><p>There are a few optional dependencies you'll need to install to get certain functionality from this module.</p>
+
+<ul>
+<li>if you wish to use cookies (<code>jar</code>) install <code>tough-cookie</code>
+</li>
+<li>if you want to pass <code>multipart/form-data</code> you'll need to install <code>form-data</code>
+</li>
+<li>if you wish to tunnel your requests install <code>tunnel-agent</code>
+</li>
+<li>if you want to use Joyent's HTTP Signature Scheme, install <code>http-signature</code>
+</li>
+<li>if you require oauth signing, you need to install the <code>oauth-sign</code> module</li>
+<li>to use Hawk signing, you must use the <code>hawk</code> module</li>
+<li>if you want to use AWS signing, you must install the <code>aws-sign2</code> module</li>
+</ul><h3>
+<a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage examples</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// Project configuration.</span>
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+    <span class="nx">upload_file</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"zip-partly"</span><span class="o">:</span> <span class="p">{</span>    <span class="c1">// only the special QQ num user (usually the developer or tester) can be noticed the zip file has been updated !</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">'dist/qqcache/*.zip'</span><span class="p">],</span>
+            <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">url</span><span class="o">:</span> <span class="s1">'http://admin.connect.oa.com/modules/public/uploadOfflinePackage.do'</span><span class="p">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+                <span class="nx">paramObj</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="s1">'publish'</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>    <span class="c1">// 这个参数用来告诉cgi，创建包的同时是否需要发布</span>
+                    <span class="s1">'compatible'</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1">// 兼容版本</span>
+                    <span class="s1">'bid'</span><span class="o">:</span> <span class="mi">118</span><span class="p">,</span>    <span class="c1">// 所属业务</span>
+                    <span class="s1">'version'</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1">// 手Q版本号</span>
+                    <span class="s1">'platform'</span><span class="o">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>    <span class="c1">// 支持平台， 2， 3表示ios android平台都都勾选上了</span>
+                    <span class="s1">'loadmode'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>    <span class="c1">// 加载模式， 2表示拦截加载</span>
+                    <span class="s1">'frequency'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>    <span class="c1">// 更新检测的时间频率， 1表示1分钟检测一次</span>
+                    <span class="s1">'gray'</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>    <span class="c1">// 是否灰度， true表示灰度</span>
+                    <span class="s1">'uins'</span><span class="o">:</span> <span class="p">[</span>
+                        <span class="p">{</span><span class="s2">"min"</span><span class="o">:</span><span class="mi">2568612250</span><span class="p">,</span><span class="s2">"max"</span><span class="o">:</span><span class="mi">2568612250</span><span class="p">},</span>
+                        <span class="p">{</span><span class="s2">"min"</span><span class="o">:</span><span class="mi">644323349</span><span class="p">,</span><span class="s2">"max"</span><span class="o">:</span><span class="mi">644323349</span><span class="p">},</span>
+                    <span class="p">]</span>    <span class="c1">// 要灰度的QQ号</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">"zip-totally"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">'dist/qqcache/*.zip'</span><span class="p">],</span>
+            <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">url</span><span class="o">:</span> <span class="s1">'http://admin.connect.oa.com/modules/public/uploadOfflinePackage.do'</span><span class="p">,</span>
+                <span class="nx">method</span><span class="o">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+                <span class="nx">paramObj</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="s1">'publish'</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>    <span class="c1">// 这个参数用来告诉cgi，创建包的同时是否需要发布</span>
+                    <span class="s1">'compatible'</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1">// 兼容版本</span>
+                    <span class="s1">'bid'</span><span class="o">:</span> <span class="mi">118</span><span class="p">,</span>    <span class="c1">// 所属业务</span>
+                    <span class="s1">'version'</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>    <span class="c1">// 手Q版本号</span>
+                    <span class="s1">'platform'</span><span class="o">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>    <span class="c1">// 支持平台， 2， 3表示ios android平台都都勾选上了</span>
+                    <span class="s1">'loadmode'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>    <span class="c1">// 加载模式， 2表示拦截加载</span>
+                    <span class="s1">'frequency'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>    <span class="c1">// 更新检测的时间频率， 1表示1分钟检测一次</span>
+                    <span class="s1">'gray'</span><span class="o">:</span> <span class="kc">false</span>    <span class="c1">// 是否灰度， true表示灰度, false，不灰度，全量外网用户</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">});</span>
+
+
+<span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'jshint'</span><span class="p">,</span>
+    <span class="s1">'test'</span><span class="p">,</span>
+    <span class="s1">'build'</span><span class="p">,</span>
+    <span class="s1">'upload_file:zip-partly'</span>
+<span class="p">]);</span>
+
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<h2>
+<a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
+
+<ul>
+<li>2012-04-16   v0.0.1   initial release.</li>
+</ul><h2>
+<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p>grunt-upload-file is an open-source project by <a href="http://www.tencent.com/en-us/">Tencent</a> which builds on top of <a href="https://nodejs.org">Node.js</a>.</p>
+
+<h2>
+<a name="used-by-people-within-join-us" class="anchor" href="#used-by-people-within-join-us"><span class="octicon octicon-link"></span></a>Used by people within <a href="https://github.com/materliu/grunt-localhosts/issues/">(JOIN US)</a>
+</h2>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Tencent_Logo.svg/200px-Tencent_Logo.svg.png" alt="Tencent"></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2014 materliu. Licensed under the MIT license.</p>
+
+<hr><p>Task submitted by <a href="http://materliu.github.com">materliu</a></p>
+
+<p><em>This file was generated on Fri Apr 16 2014 22:38:50.</em></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
