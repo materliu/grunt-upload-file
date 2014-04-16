@@ -1,0 +1,35 @@
+{
+  "name": "grunt-upload-file",
+  "version": "0.0.1",
+  "description": "After we complie the project, somethimes we may need to upload some file through form post method !",
+  "homepage": "https://materliu.github.com/grunt-upload-file/",
+  "repository": "https://github.com/materliu/grunt-upload-file",
+  "author": {
+    "name": "materliu",
+    "email": "materliu@gmail.com",
+    "url": "https://materliu.github.com"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt": "~0.4.2",
+    "jshint-stylish": "~0.1.5",
+    "load-grunt-tasks": "~0.3.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}
