@@ -41,21 +41,6 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-
-### Options
-
 grunt-upload-file uses the [request](https://github.com/mikeal/request) module under the hood, and apart from a couple specific to grunt-upload-file options, the rest get passed straight to it. Here's a copy of the of the module's option docs. Otherwise, [go to the repo](https://github.com/mikeal/request) and have a look at what's it's capable of.
 
 - `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
