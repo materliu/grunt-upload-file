@@ -100,33 +100,56 @@ There are a few optional dependencies you'll need to install to get certain func
 ```javascript
 // Project configuration.
 grunt.initConfig({
-    upload-file: {
-        partly : {
+    upload_file: {
+        "zip-partly": {    // only the special QQ num user (usually the developer or tester) can be noticed the zip file has been updated !
             src: ['dist/qqcache/*.zip'],
             options: {
                 url: 'http://admin.connect.oa.com/modules/public/uploadOfflinePackage.do',
                 method: 'POST',
                 paramObj: {
-                    'publish': 'true',    // 这个参数用来告诉cgi，创建包的同时是否需要发布
+                    'publish': true,    // 这个参数用来告诉cgi，创建包的同时是否需要发布
                     'compatible': 0,    // 兼容版本
                     'bid': 118,    // 所属业务
                     'version': 0,    // 手Q版本号
-                    'platform': '[2, 3]',    // 支持平台， 2， 3表示ios android平台都都勾选上了
+                    'platform': [2, 3],    // 支持平台， 2， 3表示ios android平台都都勾选上了
                     'loadmode': 2,    // 加载模式， 2表示拦截加载
                     'frequency': 1,    // 更新检测的时间频率， 1表示1分钟检测一次
-                    'gray': 'true',    // 是否灰度， true表示灰度
-                    'uins': '[{"min":2568612250,"max":2568612250},{"min":644323349,"max":644323349},{"min":1437666088,"max":1437666088},{"min":22052537,"max":22052537},{"min":714512197,"max":714512197},{"min":344608146,"max":344608146},{"min":1020817152,"max":1020817152},{"min":1003565551,"max":1003565551},{"min":364110832,"max":364110832},{"min":154528486,"max":154528486},{"min":154528485,"max":154528485},{"min":339372879,"max":339372879},{"min":1025887988,"max":1025887988},{"min":295814274,"max":295814274}]'    // 要灰度的QQ号
+                    'gray': true,    // 是否灰度， true表示灰度
+                    'uins': [
+                        {"min":2568612250,"max":2568612250},
+                        {"min":644323349,"max":644323349},
+                    ]    // 要灰度的QQ号
+                }
+            }
+        },
+        "zip-totally": {
+            src: ['dist/qqcache/*.zip'],
+            options: {
+                url: 'http://admin.connect.oa.com/modules/public/uploadOfflinePackage.do',
+                method: 'POST',
+                paramObj: {
+                    'publish': true,    // 这个参数用来告诉cgi，创建包的同时是否需要发布
+                    'compatible': 0,    // 兼容版本
+                    'bid': 118,    // 所属业务
+                    'version': 0,    // 手Q版本号
+                    'platform': [2, 3],    // 支持平台， 2， 3表示ios android平台都都勾选上了
+                    'loadmode': 2,    // 加载模式， 2表示拦截加载
+                    'frequency': 1,    // 更新检测的时间频率， 1表示1分钟检测一次
+                    'gray': false    // 是否灰度， true表示灰度, false，不灰度，全量外网用户
                 }
             }
         }
-    }
+    },
 });
 
 
-grunt.registerTask('build', [
-    '.......'    // content removed for brevity
-    'upload-file:partly',    // partly
+grunt.registerTask('default', [
+    'jshint',
+    'test',
+    'build',
+    'upload_file:zip-partly'
 ]);
+
 ```
 
 ## Contributing
@@ -142,7 +165,7 @@ grunt-upload-file is an open-source project by [Tencent](http://www.tencent.com/
 ![Tencent](http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Tencent_Logo.svg/200px-Tencent_Logo.svg.png)
 
 ## License
-Copyright (c) 2014 materliu. Licensed under the MIT license. Forked from [grunt-http](https://github.com/johngeorgewright/grunt-http)
+Copyright (c) 2014 materliu. Licensed under the MIT license.
 
 ---
 

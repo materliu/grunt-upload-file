@@ -10,6 +10,7 @@
 
 var request = require('request'),
     async = require('async'),
+    fs = require('fs'),
     FormData = require('form-data');
 
 module.exports = function (grunt) {
@@ -58,6 +59,7 @@ module.exports = function (grunt) {
                 ignoreErrors: false,
                 sourceField: 'body'
             }),
+                _self = this,
                 done = this.async(),
                 sourceField = options.sourceField,
                 sourcePath = sourceField.split('.'),
@@ -67,35 +69,11 @@ module.exports = function (grunt) {
                 callback = options.callback,
                 files = [];
 
-            // Iterate over all specified file groups.
-            this.files.forEach(function (file) {
-                // Concat specified files.
-                var src = file.src.filter(function (filepath) {
-                    // Warn on and remove invalid source files (if nonull was set).
-                    if (!grunt.file.exists(filepath)) {
-                        grunt.log.warn('Source file "' + filepath + '" not found.');
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }).map(function (filepath) {
-                    // Read file source.
-                    return grunt.file.read(filepath);
-                }).join(grunt.util.normalizelf(options.separator));
-
-                // Handle options.
-                src += options.punctuation;
-
-                // Write the destination file.
-                grunt.file.write(file.dest, src);
-
-                // Print a success message.
-                grunt.log.writeln('File "' + file.dest + '" created.');
-            });
 
             sourcePath.forEach(function (key) {
                 sourceObj = sourceObj[key];
             });
+
 
             if (formCallback) {
                 delete options.form;
@@ -114,15 +92,68 @@ module.exports = function (grunt) {
             }
 
             function call(file, next) {
-                var r, callback, form;
+                var r, callback, form, preserveParamObj;
                 file = file || {};
                 configureSource(file);
                 callback = responseHandler(file.dest, options.ignoreErrors, options.callback, next);
-                r = request(options, callback);
-                if (formCallback) {
-                    form = r.form();
-                    formCallback(form);
+
+                // here remove unnecessary param
+                if (options.paramObj) {
+                    preserveParamObj = options.paramObj;
+                    delete options.paramObj;
                 }
+
+                r = request(options, callback);
+
+                form = r.form();
+
+                if (preserveParamObj && typeof preserveParamObj === "object") {
+                    for (var key in preserveParamObj) {
+
+                        if (Array.isArray(preserveParamObj[key]) || typeof preserveParamObj[key] === "object") {
+                            preserveParamObj[key] = JSON.stringify(preserveParamObj[key]);
+                        }
+
+
+                        form.append(key, '' + preserveParamObj[key]);
+
+                    }
+                }
+
+                // check if there files to add
+                // Iterate over all specified file groups.
+                _self.files.forEach(function (file) {
+                    // Concat specified files.
+                    var src = file.src.filter(function (filepath) {
+                        // Warn on and remove invalid source files (if nonull was set).
+                        if (!grunt.file.exists(filepath)) {
+                            grunt.log.warn('Source file "' + filepath + '" not found.');
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }).map(function (filepath) {
+                        // Read file source.
+                        var filename = filepath.split('\/');
+
+                        filename = filename[filename.length - 1];
+
+                        // force octet-stream ContentType
+                        form.append('file',
+                            fs.createReadStream(filepath),
+                            {
+                                filename: filename,
+                                contentType: 'application/octet-stream'
+                            }
+                        );
+                    });
+                });
+
+//                if (formCallback) {
+//                    form = r.form();
+//
+//                    formCallback(form);
+//                }
             }
 
             function resolve(err) {
@@ -148,12 +179,12 @@ module.exports = function (grunt) {
                 });
             }
 
-            if (this.files.length) {
-                this.files.forEach(addToFilesArray);
-                async.each(files, call, resolve);
-            } else {
+//            if (this.files.length) {
+//                this.files.forEach(addToFilesArray);
+//                async.each(files, call, resolve);
+//            } else {
                 call(null, resolve);
-            }
+//            }
 
 
         });
