@@ -100,10 +100,15 @@ grunt.initConfig({
                     'publish': true,    // 这个参数用来告诉cgi，创建包的同时是否需要发布
                     'compatible': 0,    // 兼容版本
                     'bid': 118,    // 所属业务
-                    'version': 0,    // 手Q版本号
+					"qversionfrom": "0", // 手Q起始版本号
+            		"qversionto": "0", // 手Q结束版本号
                     'platform': [2, 3],    // 支持平台， 2， 3表示ios android平台都都勾选上了
                     'loadmode': 2,    // 加载模式， 2表示拦截加载
                     'frequency': 1,    // 更新检测的时间频率， 1表示1分钟检测一次
+					"verifyType": 0,
+		            "expire_time": 1577836800000, // 过期时间毫秒数，默认为 2020-1-1
+		            "cdn": "defaultCDN", // 连线包使用cdn，默认为 defaultCDN
+		            "note": "", // 备注
                     'gray': true,    // 是否灰度， true表示灰度
                     'uins': [
                         {"min":2568612250,"max":2568612250},
@@ -121,10 +126,15 @@ grunt.initConfig({
                     'publish': true,    // 这个参数用来告诉cgi，创建包的同时是否需要发布
                     'compatible': 0,    // 兼容版本
                     'bid': 118,    // 所属业务
-                    'version': 0,    // 手Q版本号
+                    "qversionfrom": "0", // 手Q起始版本号
+            		"qversionto": "0", // 手Q结束版本号
                     'platform': [2, 3],    // 支持平台， 2， 3表示ios android平台都都勾选上了
                     'loadmode': 2,    // 加载模式， 2表示拦截加载
                     'frequency': 1,    // 更新检测的时间频率， 1表示1分钟检测一次
+					"verifyType": 0,
+		            "expire_time": 1577836800000, // 过期时间毫秒数，默认为 2020-1-1
+		            "cdn": "defaultCDN", // 连线包使用cdn，默认为 defaultCDN
+		            "note": "", // 备注
                     'gray': false    // 是否灰度， true表示灰度, false，不灰度，全量外网用户
                 }
             }
